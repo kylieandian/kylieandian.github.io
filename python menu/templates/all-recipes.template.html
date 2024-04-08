@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="$lang$">
+<head>
+    {% include 'head.partial.html' %}
+    <title>Recipes</title>
+</head>
+<body>
+    <main class="index">
+        <header>
+            <div class="name">
+                <nav>
+                    <a href="/"><h2>Home<i>⟩</i></h2></a>
+                    <a href="/all"><h2>All Recipes<i>⟩</i></h2></a>
+                </nav>
+                <h1><span>All Recipes</span></h1>
+            </div>
+            {% if index_description %}
+                <p>{{index_description}}</p>
+            {% endif %}
+            <!--<aside class="search">
+                <input type="text" placeholder="search..." id="search_input" disabled>
+                <div class="results" id="search_output"></div>
+                <script src="{{ url_for('static', filename='search.js') }}"></script>
+            </aside>-->
+        </header>
+            <section>
+                <h2><div class="tab">
+                    <a href="/all/main"><button class="tablinks">Main Recipes</button></a>
+                    <a href="/all/side"><button class="tablinks">Sides</button></a>
+                    <a href="/all/drink"><button class="tablinks">Drinks</button></a>
+                </div></h2>
+                <h2>Main </h2>
+                {% for recipe in meals %}
+                    {% include 'recipe_list_item.partial.html' %}
+                {% endfor %}
+            </section>
+        {% include 'footer.partial.html' %}
+    </main>
+</body>
+</html>

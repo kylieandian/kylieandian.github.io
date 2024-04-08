@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="$lang$">
+<head>
+    {% include 'head.partial.html' %}
+    <title>{{recipe[0]}}</title>
+</head>
+<body>
+    <main class="recipe">
+        <header>
+            <div class="name">
+                <nav>
+                    <a href="/"><h2>Home<i>⟩</i></h2></a>
+                    <a href="/all"><h2>All Recipes<i>⟩</i></h2></a>
+                </nav>
+                <h1><span>{{recipe[0]}}{% if recipe[8]["favorite"] %}<sup>★</sup>{% endif %}</span></h1>
+            </div>
+            <ul>
+                {% if recipe[2] %}
+                <li><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-tools-kitchen-2.svg') }}"> {{recipe[2]}} servings</li>
+                {% endif %}
+                {% if recipe[8]["time"] %}
+                <li><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-clock.svg') }}"> {{recipe[8]["time"]}}</li>
+                {% endif %}
+                {% if author %}
+                    <li>
+                        {% if source %}
+                            <a href="{{source}}"><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-link.svg') }}"> {{author}}</a>
+                        {% else %}
+                        <img src="{{ url_for('static', filename='tabler-icons/tabler-icon-user.svg') }}"> {{author}}
+                        {% endif %}
+                    </li>
+                {% elif recipe[5]%}
+                    <li><a href="{{recipe[5]}}", title="{{recipe[5]}}"><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-link.svg') }}"> Original Recipe</a></li>
+                {% endif %}
+                {% if recipe[8]["veggie"] %}
+                    <li><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-leaf.svg') }}"> vegetarian</li>
+                {% else %}
+                    <!--<li><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-meat.svg') }}"> meat</li>-->
+                {% endif %}
+                {% if recipe[8]["spicy"] %}
+                    <li><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-pepper.svg') }}"> {{recipe[8]["spicy"]}}</li>
+                {% endif %}
+                {% if recipe[8]["sweet"] %}
+                    <li><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-candy.svg') }}"> {{recipe[8]["sweet"]}}</li>
+                {% endif %}
+                {% if recipe[8]["salty"] %}
+                    <li><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-salt.svg') }}"> {{recipe[8]["salty"]}}</li>
+                {% endif %}
+                {% if recipe[8]["sour"] %}
+                    <li><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-lemon.svg') }}"> {{recipe[8]["sour"]}}</li>
+                {% endif %}
+                {% if recipe[8]["bitter"] %}
+                    <li><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-coffee.svg') }}"> {{recipe[8]["bitter"]}}</li>
+                {% endif %}
+                {% if recipe[8]["umami"] %}
+                    <li><img src="{{ url_for('static', filename='tabler-icons/tabler-icon-mushroom.svg') }}"> {{recipe[8]["umami"]}}</li>
+                {% endif %}
+            </ul>
+            {% if nutrition %}
+                <p class="nutrition">
+                    <img src="{{ url_for('static', filename='tabler-icons/tabler-icon-clipboard-list.svg') }}">
+                    {% for it in nutrition %}
+                        {{it}}
+                        ${ sep }·
+                    {% endfor %}
+                </p>
+            {% endif %}
+            <p>{{recipe[1]}} dish.</p>
+        </header>
+        {% if image %}
+            <div class="servingsuggestion">
+                {% if image_source %}
+                    <a href="{{image_source}}">
+                {% endif %}
+                <img src="{{image}}">
+                {% if image_attribution %}
+                    <div class="attribution">
+                        {{image_attribution}}
+                    </div>
+                {% endif %}
+                {% if image_source %}
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+        <section>
+            <hr>
+            <h2><span>Ingredients</span></h2>
+            <ul>
+            {% for ings in recipe[3] %}
+            <li><code>{{ings[0]}}</code> {{ings[1]}}</li>
+            {% endfor %}
+            </ul>
+            <h2><span>Instructions</span></h2>
+            {% for instruct in recipe[4] %}
+            <hr />
+            <blockquote>
+            <p>{{instruct}}</p>
+            </blockquote>
+            {% endfor %}
+        </section>
+        {% include 'footer.partial.html' %}
+    </main>
+</body>
+</html>
